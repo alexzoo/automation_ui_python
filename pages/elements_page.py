@@ -70,3 +70,17 @@ class CheckBoxPage(BasePage):
         for item in result_list:
             data.append(item.text)
         return str(data).replace(' ', '').lower()
+
+
+class RadioButtonPage(BasePage):
+
+    locators = elements_page_locators.RadioButtonPageLocators
+
+    def click_on_the_radio_button(self, choice):
+        choices = {'yes': self.locators.RADIO_BUTTON_YES,
+                   'impressive': self.locators.RADIO_BUTTON_IMPRESSIVE,
+                   'no': self.locators.RADIO_BUTTON_NO}
+        self.element_is_visible(choices[choice]).click()
+
+    def get_output_result(self):
+        return self.element_is_present(self.locators.OUTPUT_RESULT).text
