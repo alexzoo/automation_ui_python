@@ -1,6 +1,6 @@
 import time
 
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage
 
 
 class TestElements:
@@ -49,3 +49,17 @@ class TestElements:
             assert output_yes == 'Yes', 'Yes not selected'
             assert output_impressive == 'Impressive', 'Impressive not selected'
             assert output_no == 'No', 'No not selected'
+
+    class TestWebTables:
+
+        def test_web_tables(self, driver):
+            # Arrange
+            web_tables_page = WebTablesPage(driver, 'https://demoqa.com/webtables')
+            web_tables_page.open()
+            # Act
+            person = web_tables_page.add_new_person()
+            result = web_tables_page.check_new_added_person()
+            # Assert
+            assert person in result, 'Person not added'
+
+
