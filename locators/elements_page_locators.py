@@ -44,3 +44,9 @@ class WebTablesPageLocators:
 
     # created form
     PEOPLE_LIST = (By.CSS_SELECTOR, 'div[class="rt-tr-group"]')
+
+    # search
+    SEARCH_INPUT = (By.CSS_SELECTOR, 'input[id="searchBox"]')
+    DELETE_BUTTON = (By.CSS_SELECTOR, 'span[title="Delete"]')
+    ROW_PARENT = './/ancestor::div[@class="rt-tr-group"]'
+
