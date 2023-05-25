@@ -1,6 +1,7 @@
+import random
 import time
 
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage
 
 
 class TestElements:
@@ -49,3 +50,50 @@ class TestElements:
             assert output_yes == 'Yes', 'Yes not selected'
             assert output_impressive == 'Impressive', 'Impressive not selected'
             assert output_no == 'No', 'No not selected'
+
+    class TestWebTables:
+
+        def test_web_tables(self, driver):
+            # Arrange
+            web_tables_page = WebTablesPage(driver, 'https://demoqa.com/webtables')
+            web_tables_page.open()
+            # Act
+            person = web_tables_page.add_new_person()
+            result = web_tables_page.check_new_added_person()
+            # Assert
+            assert person in result, 'Person not added'
+
+        def test_web_table_search_person(self, driver):
+            # Arrange
+            web_tables_page = WebTablesPage(driver, 'https://demoqa.com/webtables')
+            web_tables_page.open()
+            # Act
+            new_person = web_tables_page.add_new_person()[random.randint(0, 5)]
+            web_tables_page.search_person(new_person)
+            result = web_tables_page.check_searched_person()
+            # Assert
+            assert new_person in result, 'Person not found'
+
+        def test_web_table_update_person(self, driver):
+            # Arrange
+            web_tables_page = WebTablesPage(driver, 'https://demoqa.com/webtables')
+            web_tables_page.open()
+            # Act
+            last_name = web_tables_page.add_new_person()[1]
+            web_tables_page.search_person(last_name)
+            age = web_tables_page.update_person()
+            result = web_tables_page.check_searched_person()
+            # Assert
+            assert age in result, 'Person not updated'
+
+        def test_web_table_delete_person(self, driver):
+            # Arrange
+            web_tables_page = WebTablesPage(driver, 'https://demoqa.com/webtables')
+            web_tables_page.open()
+            # Act
+            email = web_tables_page.add_new_person()[3]
+            web_tables_page.search_person(email)
+            web_tables_page.delete_person()
+            result = web_tables_page.check_deleted_person()
+            # Assert
+            assert result == 'No rows found', 'Person not deleted'
