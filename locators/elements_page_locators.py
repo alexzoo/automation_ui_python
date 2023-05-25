@@ -50,3 +50,8 @@ class WebTablesPageLocators:
     DELETE_BUTTON = (By.CSS_SELECTOR, 'span[title="Delete"]')
     ROW_PARENT = './/ancestor::div[@class="rt-tr-group"]'
 
+    # update
+    EDIT_BUTTON = (By.CSS_SELECTOR, 'span[title="Edit"]')
+
+    NO_ROWS_DATA = (By.CSS_SELECTOR, 'div[class="rt-noData"]')
+

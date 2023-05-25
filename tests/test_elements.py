@@ -73,3 +73,27 @@ class TestElements:
             result = web_tables_page.check_searched_person()
             # Assert
             assert new_person in result, 'Person not found'
+
+        def test_web_table_update_person(self, driver):
+            # Arrange
+            web_tables_page = WebTablesPage(driver, 'https://demoqa.com/webtables')
+            web_tables_page.open()
+            # Act
+            last_name = web_tables_page.add_new_person()[1]
+            web_tables_page.search_person(last_name)
+            age = web_tables_page.update_person()
+            result = web_tables_page.check_searched_person()
+            # Assert
+            assert age in result, 'Person not updated'
+
+        def test_web_table_delete_person(self, driver):
+            # Arrange
+            web_tables_page = WebTablesPage(driver, 'https://demoqa.com/webtables')
+            web_tables_page.open()
+            # Act
+            email = web_tables_page.add_new_person()[3]
+            web_tables_page.search_person(email)
+            web_tables_page.delete_person()
+            result = web_tables_page.check_deleted_person()
+            # Assert
+            assert result == 'No rows found', 'Person not deleted'
