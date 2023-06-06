@@ -1,5 +1,7 @@
 import random
 
+import requests
+
 from generator.generator import generated_person
 from locators import elements_page_locators
 from pages.base_page import BasePage
@@ -158,3 +160,27 @@ class ButtonsPage(BasePage):
 
     def checked_clicked_on_the_button(self, element):
         return self.element_is_present(element).text
+
+
+class LinksPage(BasePage):
+    locators = elements_page_locators.LinksPageLocators
+
+    def check_new_tab_link(self):
+        link = self.element_is_visible(self.locators.HOME_LINK)
+        link_href = link.get_attribute('href')
+        request = requests.get(link_href)
+        if request.status_code == 200:
+            link.click()
+            self.switch_to_tab(1)
+            url = self.get_current_url()
+            return link_href, url
+
+        else:
+            return link_href, request.status_code
+
+    def check_broken_link(self, url):
+        request = requests.get(url)
+        if request.status_code == 200:
+            self.element_is_present(self.locators.BAD_GATEWAY_LINK).click()
+        else:
+            return request.status_code
