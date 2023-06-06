@@ -138,3 +138,23 @@ class WebTablesPage(BasePage):
 
     def check_deleted_person(self):
         return self.element_is_present(self.locators.NO_ROWS_DATA).text
+
+
+class ButtonsPage(BasePage):
+    locators = elements_page_locators.ButtonsPageLocators
+
+    def click_on_the_button(self, type_click):
+        if type_click == 'double':
+            self.action_double_click(self.element_is_visible(self.locators.DOUBLE_CLICK_BUTTON))
+            return self.checked_clicked_on_the_button(self.locators.DOUBLE_CLICK_MESSAGE)
+
+        elif type_click == 'right':
+            self.action_right_click(self.element_is_visible(self.locators.RIGHT_CLICK_BUTTON))
+            return self.checked_clicked_on_the_button(self.locators.RIGHT_CLICK_MESSAGE)
+
+        elif type_click == 'click':
+            self.element_is_visible(self.locators.CLICK_ME_BUTTON).click()
+            return self.checked_clicked_on_the_button(self.locators.CLICK_ME_MESSAGE)
+
+    def checked_clicked_on_the_button(self, element):
+        return self.element_is_present(element).text

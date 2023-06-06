@@ -1,7 +1,7 @@
 import random
 import time
 
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage, ButtonsPage
 
 
 class TestElements:
@@ -97,3 +97,18 @@ class TestElements:
             result = web_tables_page.check_deleted_person()
             # Assert
             assert result == 'No rows found', 'Person not deleted'
+
+    class TestButtons:
+
+        def test_different_click_on_the_buttons(self, driver):
+            # Arrange
+            buttons_page = ButtonsPage(driver, 'https://demoqa.com/buttons')
+            buttons_page.open()
+            # Act
+            double = buttons_page.click_on_the_button('double')
+            right = buttons_page.click_on_the_button('right')
+            click = buttons_page.click_on_the_button('click')
+            # Assert
+            assert double == 'You have done a double click', 'Double button not clicked'
+            assert right == 'You have done a right click', 'Right Button not clicked'
+            assert click == 'You have done a dynamic click', 'Click Button not clicked'
