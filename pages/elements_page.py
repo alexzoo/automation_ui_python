@@ -1,10 +1,13 @@
+import os
 import random
 
 import requests
 
-from generator.generator import generated_person
+from generator.generator import generated_person, generated_file
 from locators import elements_page_locators
 from pages.base_page import BasePage
+
+import time
 
 
 class TextBoxPage(BasePage):
@@ -184,3 +187,19 @@ class LinksPage(BasePage):
             self.element_is_present(self.locators.BAD_GATEWAY_LINK).click()
         else:
             return request.status_code
+
+
+class TestUploadAndDownloadFilePage(BasePage):
+    locators = elements_page_locators.UploadAndDownloadFilePageLocators
+
+    def upload_file(self):
+        filename, path = generated_file()
+        self.element_is_present(self.locators.UPLOAD_FILE).send_keys(path)
+        os.remove(path)
+        text = self.element_is_present(self.locators.UPLOADED_RESULT).text
+        return filename.split('/')[-1], text.split('\\')[-1]
+
+
+
+
+

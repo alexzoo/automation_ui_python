@@ -19,3 +19,11 @@ def generated_person():
         current_address=faker_ru.address(),
         permanent_address=faker_ru.address()
     )
+
+
+def generated_file():
+    path = rf'/Users/azubov/Downloads/file_test_{random.randint(1, 100)}.txt'
+    file = open(path, 'w+')
+    file.write(f'Hello World!{random.randint(1, 100)}')
+    file.close()
+    return file.name, path
